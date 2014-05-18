@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
+	<category name="wbb.post.edithistory">
+		<item name="wbb.post.edithistory.title"><![CDATA[Edit History]]></item>
+		<item name="wbb.post.edithistory.versions"><![CDATA[Versionen]]></item>
+		<item name="wbb.post.edithistory.revert"><![CDATA[Wiederherstellen]]></item>
+		<item name="wbb.post.edithistory.ipAddress"><![CDATA[IP: {$version->getIpAddress()}]]></item>
+	</category>
+	
+	<category name="wcf.acp.group">
+		<item name="wcf.acp.group.option.mod.board.canViewPostVersions"><![CDATA[Kann die Edit-History sehen]]></item>
+	</category>
+	
+	<category name="wcf.acp.option">
+		<item name="wcf.acp.option.wbb_postedithistory_deleteversionsafter"><![CDATA[Versionen automatisch löschen]]></item>
+		<item name="wcf.acp.option.wbb_postedithistory_deleteversionsafter.description"><![CDATA[Zeitraum nach dem Versionen von Beiträgen automatisch gelöscht werden. [Zeit in Tagen, 0 um die Löschung gänzlich zu deaktivieren]]]></item>
+	</category>
+</language>

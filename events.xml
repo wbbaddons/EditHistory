@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/eventListener.xsd">
+        <import>
+                <eventlistener>
+                        <eventclassname>wbb\data\post\PostAction</eventclassname>
+                        <eventname>initializeAction</eventname>
+                        <listenerclassname>wbb\system\event\listener\EditHistoryListener</listenerclassname>
+                </eventlistener>
+		
+		<eventlistener>
+                        <eventclassname>wbb\data\post\PostAction</eventclassname>
+                        <eventname>finalizeAction</eventname>
+                        <listenerclassname>wbb\system\event\listener\EditHistoryListener</listenerclassname>
+                </eventlistener>
+		
+		<eventlistener>
+                        <eventclassname>wbb\page\ThreadPage</eventclassname>
+                        <eventname>assignVariables</eventname>
+                        <listenerclassname>wbb\system\event\listener\EditHistoryHasVersionsListener</listenerclassname>
+                </eventlistener>
+		
+		<eventlistener>
+                        <eventclassname>wcf\system\cronjob\DailyCleanUpCronjob</eventclassname>
+                        <eventname>execute</eventname>
+                        <listenerclassname>wbb\system\event\listener\EditHistoryCronjobListener</listenerclassname>
+                </eventlistener>
+        </import>
+</data>
