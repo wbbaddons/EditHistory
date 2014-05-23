@@ -58,6 +58,7 @@
 
 <div class="marginTop">
 	<ul class="wbbVersionList versionList">
+		{assign var='first' value=true}
 		{foreach from=$objects item=version}
 			{assign var='objectID' value=$version->versionID}
 			{assign var='userProfile' value=$version->getUserProfile()}
@@ -72,6 +73,7 @@
 										<a href="{link application='wbb' controller='PostVersions' id=$post->postID appendSession=false}{/link}#version{@$version->versionID}" class="permalink">{@$version->time|time}</a>
 									</p>
 								</div>
+								{if $first == true && $pageNo == 1}<p class="newMessageBadge">{lang}wbb.post.edithistory.current{/lang}</p>{/if}
 							</header>
 							
 							<div class="messageBody">
@@ -85,7 +87,9 @@
 									<nav class="jsMobileNavigation buttonGroupNavigation">
 										<ul class="smallButtons buttonGroup">
 											{if LOG_IP_ADDRESS && $version->ipAddress && $__wcf->session->getPermission('admin.user.canViewIpAddress')}<li class="jsIpAddress jsOnly" data-version-id="{@$version->versionID}"><a title="{lang}wbb.post.edithistory.ipAddress{/lang}" class="button jsTooltip"><span class="icon icon16 icon-globe"></span> <span class="invisible">{lang}wbb.post.edithistory.ipAddress{/lang}</span></a></li>{/if}
-											{if $canRestore}<li class="jsOnly jsPostRevert" data-version-id="{@$version->versionID}"><a title="{lang}wbb.post.edithistory.revert{/lang}" class="button jsTooltip"><span class="icon icon16 icon-undo"></span> <span class="invisible">{lang}wbb.post.version.revert{/lang}</span></a></li>{/if}
+											{if $canRestore && ($pageNo != 1 || $first != true)}
+												<li class="jsOnly jsPostRevert" data-version-id="{@$version->versionID}"><a title="{lang}wbb.post.edithistory.revert{/lang}" class="button jsTooltip"><span class="icon icon16 icon-undo"></span> <span class="invisible">{lang}wbb.post.version.revert{/lang}</span></a></li>
+											{/if}
 
 											{event name='messageOptions'}
 										</ul>
@@ -96,6 +100,7 @@
 					</section>
 				</article>
 			</li>
+			{assign var='first' value=false}
 		{/foreach}
 	</ul>
 </div>
