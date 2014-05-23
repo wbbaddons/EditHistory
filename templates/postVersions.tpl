@@ -85,7 +85,7 @@
 									<nav class="jsMobileNavigation buttonGroupNavigation">
 										<ul class="smallButtons buttonGroup">
 											{if LOG_IP_ADDRESS && $version->ipAddress && $__wcf->session->getPermission('admin.user.canViewIpAddress')}<li class="jsIpAddress jsOnly" data-version-id="{@$version->versionID}"><a title="{lang}wbb.post.edithistory.ipAddress{/lang}" class="button jsTooltip"><span class="icon icon16 icon-globe"></span> <span class="invisible">{lang}wbb.post.edithistory.ipAddress{/lang}</span></a></li>{/if}
-											{if $canRestore}<li class="jsOnly jsPostRevert" data-version-id="{@$version->versionID}"><a title="{lang}wbb.post.edithistory.revert{/lang}" class="button jsTooltip"><span class="icon icon16 icon-reply"></span> <span class="invisible">{lang}wbb.post.version.revert{/lang}</span></a></li>{/if}
+											{if $canRestore}<li class="jsOnly jsPostRevert" data-version-id="{@$version->versionID}"><a title="{lang}wbb.post.edithistory.revert{/lang}" class="button jsTooltip"><span class="icon icon16 icon-undo"></span> <span class="invisible">{lang}wbb.post.version.revert{/lang}</span></a></li>{/if}
 
 											{event name='messageOptions'}
 										</ul>
