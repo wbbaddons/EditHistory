@@ -1,0 +1,14 @@
+/* #versioncompare is like the #showQuotes */
+#versionCompare {
+	bottom: @wcfGapLarge + @wcfGapTiny;
+	cursor: pointer;
+	opacity: .7;
+	position: fixed;
+	right: @wcfGapLarge + @wcfGapTiny;
+
+	.transition(opacity, .2s);
+
+	&:hover {
+		opacity: 1;
+	}
+}

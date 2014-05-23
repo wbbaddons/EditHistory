@@ -6,6 +6,8 @@
 		<item name="wbb.post.edithistory.revert"><![CDATA[Wiederherstellen]]></item>
 		<item name="wbb.post.edithistory.ipAddress"><![CDATA[IP: {$version->getIpAddress()}]]></item>
 		<item name="wbb.post.edithistory.current"><![CDATA[Aktuell]]></item>
+		<item name="wbb.post.edithistory.comparison"><![CDATA[Vergleich]]></item>
+		<item name="wbb.post.edithistory.compare"><![CDATA[Vergleichen]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">

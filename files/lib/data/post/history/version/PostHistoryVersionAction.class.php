@@ -7,6 +7,7 @@ use wbb\data\post\Post;
 use wbb\data\thread\Thread; 
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\util\DiffUtil; 
 use wcf\util\UserUtil; 
 
 class PostHistoryVersionAction extends AbstractDatabaseObjectAction {
@@ -177,6 +178,39 @@ class PostHistoryVersionAction extends AbstractDatabaseObjectAction {
 		return array(
 			'versionID' => $this->version->versionID,
 			'template' => WCF::getTPL()->fetch('postIpAddress', 'wbb')
+		);
+	}
+	
+	public function validateCompare() {
+		if (isset($this->parameters['version1'])) {
+			$this->version1 = new PostHistoryVersion($this->parameters['version1']);
+		}
+                
+		if ($this->version1 === null || !$this->version1->versionID) {
+			throw new UserInputException('version1');
+		}
+		
+		if (isset($this->parameters['version2'])) {
+			$this->version2 = new PostHistoryVersion($this->parameters['version2']);
+		}
+                
+		if ($this->version2 === null || !$this->version2->versionID || $this->version1->postID != $this->version2->postID) {
+			throw new UserInputException('version2');
+		}
+
+		$post = new Post($this->version1->postID); 
+		
+		if (!$post->canRead()) {
+			throw new PermissionDeniedException();
+		}
+		
+		WCF::getSession()->checkPermissions(array('mod.board.canViewPostVersions'));
+	}
+	
+	public function compare() {
+		return array(
+			'uid' => $this->version1->versionID.'y'.$this->version2->versionID,
+			'template' => DiffUtil::toHTML(DiffUtil::compare($this->version1->message, $this->version2->message))
 		);
 	}
 }

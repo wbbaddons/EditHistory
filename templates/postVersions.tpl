@@ -19,9 +19,12 @@
 			new WCF.Message.BBCode.CodeViewer();
 			new WBB.EditHistory.Revert();
 			new WBB.EditHistory.IPAddressHandler();
+			new WBB.EditHistory.CompareHandler();
 			
 			WCF.Language.addObject({
-				'wbb.post.ipAddress.title': '{lang}wbb.post.ipAddress.title{/lang}'
+				'wbb.post.ipAddress.title': '{lang}wbb.post.ipAddress.title{/lang}', 
+				'wbb.post.edithistory.comparison': '{lang}wbb.post.edithistory.comparison{/lang}', 
+				'wbb.post.edithistory.compare': '{lang}wbb.post.edithistory.compare{/lang}'
 			});
 		});
 		//]]>
@@ -68,6 +71,14 @@
 					<section class="messageContent">
 						<div>
 							<header class="messageHeader">
+								<ul class="messageQuickOptions">
+									<li class="jsOnly firstCompare">
+										<input type="radio" name="firstVersionCompare" class="firstVersionCompare" data-object-id="{$version->versionID}" id="version{$version->versionID}" />
+									</li>
+									<li class="jsOnly secondCompare">
+										<input type="radio" name="secondVersionCompare" class="secondVersionCompare" data-object-id="{$version->versionID}" id="version{$version->versionID}" />
+									</li>
+								</ul>
 								<div class="messageHeadline">
 									<p>
 										<a href="{link application='wbb' controller='PostVersions' id=$post->postID appendSession=false}{/link}#version{@$version->versionID}" class="permalink">{@$version->time|time}</a>

@@ -167,3 +167,175 @@ WBB.EditHistory.IPAddressHandler = Class.extend({
 		this._dialog.wcfDialog('render');
 	}
 });
+
+/**
+ * Displays an overlay for post compares. 
+ */
+WBB.EditHistory.CompareHandler = Class.extend({
+	/**
+	 * template cache
+	 * @var	object
+	 */
+	_cache: { },
+	
+	/**
+	 * dialog object
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * version id
+	 * @var	int
+	 */
+	_cversion1: 0, 
+	
+	/**
+	 * version id
+	 * @var int
+	 */
+	_cversion2: 0, 
+	
+	/**
+	 * Initializes the post ip overlay.
+	 */
+	init: function() {
+		this._cache = { };
+		this._dialog = null;
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		this._initButtons();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WBB.EditHistory.CompareHandler', $.proxy(this._initButtons, this));
+	},
+	
+	/**
+	 * Handles clicks on the compare button.
+	 * 
+	 * @param	object		event
+	 */
+	_compare: function() {
+		if (this._cache[this._createuid(this._cversion1, this._cversion2)] != undefined) {
+			this._showDialog(this._createuid(this._cversion1, this._cversion2));
+		}
+		else {
+			this._proxy.setOption('data', {
+				actionName: 'compare',
+				className: 'wbb\\data\\post\\history\\version\\PostHistoryVersionAction',
+				parameters: {
+					version1: this._cversion1, 
+					version2: this._cversion2
+				}
+			});
+			this._proxy.sendRequest();
+		}
+	}, 
+	
+	/**
+	 * Initializes the button events.
+	 */
+	_initButtons: function() {
+		$('<div id="showQuotes" class="balloonTooltip" />').click($.proxy(this._compare, this)).text(WCF.Language.get('wbb.post.edithistory.compare')).appendTo(document.body).show();
+		
+		var self = this; 
+		
+		$('.firstVersionCompare').each(function(index, button) {
+			var $button = $(button);
+			
+			$button.change(function () {
+				self._cversion1 = $(this).data('objectId');
+				self._regenerateOptions(); 
+			});
+		});
+		
+		$('.secondVersionCompare').each(function(index, button) {
+			var $button = $(button);
+			
+			$button.change(function () {
+				self._cversion2 = $(this).data('objectId');
+				self._regenerateOptions();
+			});
+		});
+		
+		$('.firstVersionCompare').first().attr('checked', 'checked');
+		$('.secondVersionCompare').last().attr('checked', 'checked');
+		
+		this._cversion1 = $('.firstVersionCompare').first().data('objectId');
+		this._cversion2 = $('.secondVersionCompare').last().data('objectId');
+		
+		this._regenerateOptions();
+	},
+	
+	/**
+	 * recalculate the disabled options
+	 */
+	_regenerateOptions: function() {
+		var self = this; 
+		$('.secondVersionCompare').each(function(index, button) {
+			var $button = $(button);
+			
+			if ($(button).data('objectId') >= self._cversion1) {
+				$(button).prop('disabled', true); 
+			} else {
+				$(button).prop('disabled', false); 
+			}
+		});
+		
+		$('.firstVersionCompare').each(function(index, button) {
+			var $button = $(button);
+			
+			if ($(button).data('objectId') <= self._cversion2) {
+				$(button).prop('disabled', true); 
+			} else {
+				$(button).prop('disabled', false); 
+			}
+		});
+	}, 
+	
+	/**
+	 * create a uid for the diff
+	 */
+	_createuid: function(version1, version2) {
+		return version1+'y'+version2; 
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		// cache template
+		this._cache[data.returnValues.uid] = data.returnValues.template;
+		
+		// show dialog
+		this._showDialog(data.returnValues.uid);
+	},
+	
+	/**
+	 * Shows the overlay for given version id.
+	 * 
+	 * @param	integer		versionID
+	 */
+	_showDialog: function(uid) {
+		if (this._dialog === null) {
+			this._dialog = $('<div id="wbbEditHistoryCompare" />').hide().appendTo(document.body);
+		}
+		
+		this._dialog.html(this._cache[uid]);
+		this._dialog.wcfDialog({
+			title: WCF.Language.get('wbb.post.edithistory.comparison')
+		});
+		this._dialog.wcfDialog('render');
+	}
+});
