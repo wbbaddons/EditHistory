@@ -5,7 +5,7 @@
 		<item name="wbb.post.edithistory.versions"><![CDATA[Versionen]]></item>
 		<item name="wbb.post.edithistory.revert"><![CDATA[Wiederherstellen]]></item>
 		<item name="wbb.post.edithistory.ipAddress"><![CDATA[IP: {$version->getIpAddress()}]]></item>
-		<item name="wbb.post.edithistory.current"><![CDATA[AKTUELL]]></item>
+		<item name="wbb.post.edithistory.current"><![CDATA[Aktuell]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">
