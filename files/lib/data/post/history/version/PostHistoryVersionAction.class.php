@@ -46,6 +46,10 @@ class PostHistoryVersionAction extends AbstractDatabaseObjectAction {
 			$this->parameters['data']['time'] = TIME_NOW;
 		}
 		
+		if (!isset($this->parameters['data']['created'])) {
+			$this->parameters['data']['created'] = TIME_NOW;
+		}
+		
 		// add userID
 		if (!isset($this->parameters['data']['userID'])) {
 			$this->parameters['data']['userID'] = WCF::getUser()->userID;

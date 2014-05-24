@@ -21,7 +21,7 @@ class EditHistoryCronjobListener implements IEventListener {
 		if (WBB_POSTEDITHISTORY_DELETEVERSIONSAFTER != 0) {
 			// delete outdated versions
 			$versionList = new PostHistoryVersionList();
-			$versionList->getConditionBuilder()->add('post_history_version.time < ?', array(TIME_NOW - 86400 * WBB_POSTEDITHISTORY_DELETEVERSIONSAFTER));
+			$versionList->getConditionBuilder()->add('post_history_version.created < ?', array(TIME_NOW - 86400 * WBB_POSTEDITHISTORY_DELETEVERSIONSAFTER));
 			$versionList->readObjects();
 
 			if (!$versionList->count()) return;

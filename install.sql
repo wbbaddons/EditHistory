@@ -6,7 +6,8 @@ CREATE TABLE wbb1_post_history_version (
 	username		VARCHAR(255)		NOT NULL DEFAULT '',
 	time 			INT(10)			NOT NULL DEFAULT 0,
 	message 		MEDIUMTEXT,
-	ipAddress		VARCHAR(39)		NOT NULL DEFAULT ''
+	ipAddress		VARCHAR(39)		NOT NULL DEFAULT '', 
+	created 		INT(10)			NOT NULL DEFAULT 0
 	KEY user (userID)
 );
 

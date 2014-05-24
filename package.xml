@@ -41,5 +41,7 @@
 		<instruction type="file" application="wbb">files.tar</instruction>
 		<instruction type="template" application="wbb">templates.tar</instruction>
 		<instruction type="language">lang/*.xml</instruction>
+		<instruction type="sql">update.sql</instruction>
+		<instruction type="script">acp/update.php</instruction>
 	</instructions>
 </package>
