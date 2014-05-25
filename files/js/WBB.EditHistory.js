@@ -271,7 +271,7 @@ WBB.EditHistory.CompareHandler = Class.extend({
 			
 			$button.change(function () {
 				self._cversion1 = $(this).data('objectId');
-				self._regenerateOptions(); 
+				self._regenerateOptions(true); 
 			});
 		});
 		
@@ -280,7 +280,7 @@ WBB.EditHistory.CompareHandler = Class.extend({
 			
 			$button.change(function () {
 				self._cversion2 = $(this).data('objectId');
-				self._regenerateOptions();
+				self._regenerateOptions(true);
 			});
 		});
 	},
@@ -290,19 +290,12 @@ WBB.EditHistory.CompareHandler = Class.extend({
 	 */
 	_loadMarkedVersionsSuccess: function(data, textStatus, jqXHR) {
 		if (data.returnValues.one !== 0 && data.returnValues.second !== 0) { // if only one is != 0; the data is invalid
-			console.log("loaded from session");
-			
 			this._cversion1 = data.returnValues.one; 
 			this._cversion2 = data.returnValues.second; 
 			
-			
-			console.log(this._cversion1);
-			console.log(this._cversion2);
-			
-			console.log(data); 
-			
 			$('#radioButtonVersionOne' + this._cversion1).attr('checked', 'checked');
 			$('#radioButtonVersionSecond' + this._cversion2).attr('checked', 'checked');
+			this._regenerateOptions(false);
 		} else {
 			$('.firstVersionCompare').first().attr('checked', 'checked');
 			$('.secondVersionCompare').last().attr('checked', 'checked');
@@ -310,7 +303,7 @@ WBB.EditHistory.CompareHandler = Class.extend({
 			this._cversion1 = $('.firstVersionCompare').first().data('objectId');
 			this._cversion2 = $('.secondVersionCompare').last().data('objectId');
 
-			this._regenerateOptions();
+			this._regenerateOptions(true);
 		}
 	}, 
 	
@@ -334,7 +327,7 @@ WBB.EditHistory.CompareHandler = Class.extend({
 	/**
 	 * recalculate the disabled options
 	 */
-	_regenerateOptions: function() {
+	_regenerateOptions: function(save) {
 		var self = this; 
 		
 		$('.secondVersionCompare').each(function(index, button) {
@@ -357,8 +350,10 @@ WBB.EditHistory.CompareHandler = Class.extend({
 			}
 		});
 		
-		// save versions in session
-		this._saveMarkedVersions(); 
+		if (save === true) {
+			// save versions in session
+			this._saveMarkedVersions(); 
+		}
 	}, 
 	
 	/**
