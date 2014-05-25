@@ -234,6 +234,9 @@ WBB.EditHistory.CompareHandler = Class.extend({
 			},
 			success: $.proxy(this._loadMarkedVersionsSuccess, this)
 		});
+		
+		$('<div id="showQuotes" class="balloonTooltip" />').click($.proxy(this._compare, this)).text(WCF.Language.get('wbb.post.edithistory.compare')).appendTo(document.body).show();
+
 	},
 	
 	/**
@@ -261,9 +264,7 @@ WBB.EditHistory.CompareHandler = Class.extend({
 	/**
 	 * Initializes the button events.
 	 */
-	_initButtons: function() {
-		$('<div id="showQuotes" class="balloonTooltip" />').click($.proxy(this._compare, this)).text(WCF.Language.get('wbb.post.edithistory.compare')).appendTo(document.body).show();
-		
+	_initButtons: function() {		
 		var self = this; 
 		
 		$('.firstVersionCompare').each(function(index, button) {
