@@ -203,9 +203,16 @@ WBB.EditHistory.CompareHandler = Class.extend({
 	_cversion2: 0, 
 	
 	/**
+	 * post id
+	 * @var int
+	 */
+	_postID: 0,
+	
+	/**
 	 * Initializes the post ip overlay.
 	 */
-	init: function() {
+	init: function(postID) {
+		this._postID = postID; 
 		this._cache = { };
 		this._dialog = null;
 		this._proxy = new WCF.Action.Proxy({
@@ -215,6 +222,18 @@ WBB.EditHistory.CompareHandler = Class.extend({
 		this._initButtons();
 		
 		WCF.DOMNodeInsertedHandler.addCallback('WBB.EditHistory.CompareHandler', $.proxy(this._initButtons, this));
+		
+		new WCF.Action.Proxy({
+			autoSend: true,
+			data: {
+				actionName: 'getMarkedVersions',
+				className: 'wbb\\data\\post\\history\\version\\PostHistoryVersionAction',
+				parameters: {
+					postID: this._postID // @TODO
+				}
+			},
+			success: $.proxy(this._loadMarkedVersionsSuccess, this)
+		});
 	},
 	
 	/**
@@ -264,14 +283,52 @@ WBB.EditHistory.CompareHandler = Class.extend({
 				self._regenerateOptions();
 			});
 		});
-		
-		$('.firstVersionCompare').first().attr('checked', 'checked');
-		$('.secondVersionCompare').last().attr('checked', 'checked');
-		
-		this._cversion1 = $('.firstVersionCompare').first().data('objectId');
-		this._cversion2 = $('.secondVersionCompare').last().data('objectId');
-		
-		this._regenerateOptions();
+	},
+	
+	/**
+	 * set the marked versions
+	 */
+	_loadMarkedVersionsSuccess: function(data, textStatus, jqXHR) {
+		if (data.returnValues.one !== 0 && data.returnValues.second !== 0) { // if only one is != 0; the data is invalid
+			console.log("loaded from session");
+			
+			this._cversion1 = data.returnValues.one; 
+			this._cversion2 = data.returnValues.second; 
+			
+			
+			console.log(this._cversion1);
+			console.log(this._cversion2);
+			
+			console.log(data); 
+			
+			$('#radioButtonVersionOne' + this._cversion1).attr('checked', 'checked');
+			$('#radioButtonVersionSecond' + this._cversion2).attr('checked', 'checked');
+		} else {
+			$('.firstVersionCompare').first().attr('checked', 'checked');
+			$('.secondVersionCompare').last().attr('checked', 'checked');
+
+			this._cversion1 = $('.firstVersionCompare').first().data('objectId');
+			this._cversion2 = $('.secondVersionCompare').last().data('objectId');
+
+			this._regenerateOptions();
+		}
+	}, 
+	
+	/**
+	 * save the marked versions in the session
+	 */
+	_saveMarkedVersions: function() {
+		new WCF.Action.Proxy({
+			autoSend: true,
+			data: {
+				actionName: 'markVersions',
+				className: 'wbb\\data\\post\\history\\version\\PostHistoryVersionAction',
+				parameters: {
+					version1: this._cversion1, 
+					version2: this._cversion2
+				}
+			}
+		});
 	},
 	
 	/**
@@ -279,6 +336,7 @@ WBB.EditHistory.CompareHandler = Class.extend({
 	 */
 	_regenerateOptions: function() {
 		var self = this; 
+		
 		$('.secondVersionCompare').each(function(index, button) {
 			var $button = $(button);
 			
@@ -298,6 +356,9 @@ WBB.EditHistory.CompareHandler = Class.extend({
 				$(button).prop('disabled', false); 
 			}
 		});
+		
+		// save versions in session
+		this._saveMarkedVersions(); 
 	}, 
 	
 	/**

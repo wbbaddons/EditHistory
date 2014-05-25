@@ -19,7 +19,7 @@
 			new WCF.Message.BBCode.CodeViewer();
 			new WBB.EditHistory.Revert();
 			new WBB.EditHistory.IPAddressHandler();
-			new WBB.EditHistory.CompareHandler();
+			new WBB.EditHistory.CompareHandler({$post->postID});
 			
 			WCF.Language.addObject({
 				'wbb.post.ipAddress.title': '{lang}wbb.post.ipAddress.title{/lang}', 
@@ -73,10 +73,10 @@
 							<header class="messageHeader">
 								<ul class="messageQuickOptions">
 									<li class="jsOnly firstCompare">
-										<input type="radio" name="firstVersionCompare" class="firstVersionCompare" data-object-id="{$version->versionID}" id="version{$version->versionID}" />
+										<input type="radio" name="firstVersionCompare" class="firstVersionCompare" data-object-id="{$version->versionID}" id="radioButtonVersionOne{$version->versionID}" />
 									</li>
 									<li class="jsOnly secondCompare">
-										<input type="radio" name="secondVersionCompare" class="secondVersionCompare" data-object-id="{$version->versionID}" id="version{$version->versionID}" />
+										<input type="radio" name="secondVersionCompare" class="secondVersionCompare" data-object-id="{$version->versionID}" id="radioButtonVersionSecond{$version->versionID}" />
 									</li>
 								</ul>
 								<div class="messageHeadline">

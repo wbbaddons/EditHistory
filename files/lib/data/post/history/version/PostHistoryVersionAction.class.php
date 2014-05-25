@@ -5,6 +5,8 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\WCF; 
 use wbb\data\post\Post;
 use wbb\data\thread\Thread; 
+use wcf\data\user\User; 
+use wcf\system\database\util\PreparedStatementConditionBuilder; 
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\util\DiffUtil; 
@@ -27,6 +29,14 @@ class PostHistoryVersionAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $permissionsUpdate = array('mod.board.canViewPostVersions');
 
+	/**
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('countLastEdits', 'revertLastEdits'); 
+	
+	/**
+	 * create a version for a post
+	 */
 	public function create() {
 		if (LOG_IP_ADDRESS) {
 			// add ip address
@@ -93,7 +103,88 @@ class PostHistoryVersionAction extends AbstractDatabaseObjectAction {
                     $post->executeAction();
                 }
 	}
-        
+	
+	/**
+	 * Validate parameters to mark a version
+	 */
+	public function validateMarkVersions() {
+		if (isset($this->parameters['version1'])) {
+			$this->version1 = new PostHistoryVersion($this->parameters['version1']);
+		}
+                
+		if ($this->version1 === null || !$this->version1->versionID) {
+			throw new UserInputException('version1');
+		}
+		
+		if (isset($this->parameters['version2'])) {
+			$this->version2 = new PostHistoryVersion($this->parameters['version2']);
+		}
+                
+		if ($this->version2 === null || !$this->version2->versionID || $this->version1->postID != $this->version2->postID) {
+			throw new UserInputException('version2');
+		}
+
+		$post = new Post($this->version1->postID); 
+		
+		if (!$post->canRead()) {
+			throw new PermissionDeniedException();
+		}
+		
+		WCF::getSession()->checkPermissions(array('mod.board.canViewPostVersions'));
+	}
+	
+	/**
+	 * save the marked versions in the session
+	 */
+	public function markVersions() {
+		$markedVersion = WCF::getSession()->getVar('edithistorymarkedversions');
+		
+		if ($markedVersion === null) {
+			$markedVersion = array(); 
+		}
+		
+		$markedVersion[$this->version1->postID]['one'] = $this->version1->versionID; 
+		$markedVersion[$this->version1->postID]['second'] = $this->version2->versionID; 
+		
+		WCF::getSession()->register('edithistorymarkedversions', $markedVersion);
+	}
+	
+	/**
+	 * validate the parameters for validateGetMarkedVersions()
+	 */
+	public function validateGetMarkedVersions() {
+		if (isset($this->parameters['postID'])) {
+			$this->post = new Post($this->parameters['postID']);
+		}
+                
+		if ($this->post === null || !$this->post->postID) {
+			throw new UserInputException('postID');
+		}
+		
+		if (!$this->post->canRead()) {
+			throw new PermissionDeniedException();
+		}
+		
+		WCF::getSession()->checkPermissions(array('mod.board.canViewPostVersions'));
+	}
+	
+	/**
+	 * return a array with the marked versions, if no data exist, the method return 0 for both versions
+	 * @return array<int>
+	 */
+	public function getMarkedVersions() {
+		$markedVersion = WCF::getSession()->getVar('edithistorymarkedversions');
+		
+		if (!isset($markedVersion[$this->post->postID])) {
+			return array(
+			    'one' => 0, 
+			    'second' => 0
+			);
+		}
+		
+		return $markedVersion[$this->post->postID]; 
+	}
+	
         /**
 	 * Validates parameters to return the logged ip addresses.
 	 */
