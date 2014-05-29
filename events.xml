@@ -11,6 +11,14 @@
                         <eventclassname>wbb\data\post\PostAction</eventclassname>
                         <eventname>finalizeAction</eventname>
                         <listenerclassname>wbb\system\event\listener\EditHistoryListener</listenerclassname>
+			<environment>user</environment>
+                </eventlistener>
+		
+		<eventlistener>
+                        <eventclassname>wbb\data\post\PostAction</eventclassname>
+                        <eventname>finalizeAction</eventname>
+                        <listenerclassname>wbb\system\event\listener\EditHistoryListener</listenerclassname>
+			<environment>admin</environment>
                 </eventlistener>
 		
 		<eventlistener>

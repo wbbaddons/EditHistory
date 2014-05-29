@@ -18,4 +18,9 @@
 		<item name="wcf.acp.option.wbb_postedithistory_deleteversionsafter"><![CDATA[Versionen automatisch löschen]]></item>
 		<item name="wcf.acp.option.wbb_postedithistory_deleteversionsafter.description"><![CDATA[Zeitraum nach dem Versionen von Beiträgen automatisch gelöscht werden. [Zeit in Tagen, 0 um die Löschung gänzlich zu deaktivieren]]]></item>
 	</category>
+	
+	<category name="wcf.clipboard">
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertLastEdits"><![CDATA[Bearbeitungen zurücksetzen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertLastEdits.confirmMessage"><![CDATA[Möchten Sie wirklich die Bearbeitungen der letzten 7 Tage von {if $count == 1}einem{else}{#$count}{/if} Benutzer{if $count > 1}n{/if} zurücksetzen?]]></item>
+	</category>
 </language>

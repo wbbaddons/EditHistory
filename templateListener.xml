@@ -7,5 +7,23 @@
 			<eventname>messageOptions</eventname>
 			<templatecode><![CDATA[{include file='__editHistoryHistoryLink' application='wbb'}]]></templatecode>
 		</templatelistener>
+		
+		<templatelistener name="includeACPEditHistoryJS">
+			<environment>admin</environment>
+			<templatename>header</templatename>
+			<eventname>javascriptInclude</eventname>
+			<templatecode><![CDATA[{if $templateName == 'userList' && $__wcf->session->getPermission('mod.board.canViewPostVersions')}
+	<script data-relocate="true" src="{@$__wcf->getPath('wbb')}acp/js/WBB.ACP.User.EditHistory.js?v={@$__wcfVersion}"></script>
+{/if}]]></templatecode>
+		</templatelistener>
+		
+		<templatelistener name="initACPEditHistoryJS">
+			<environment>admin</environment>
+			<templatename>header</templatename>
+			<eventname>javascriptInit</eventname>
+			<templatecode><![CDATA[{if $templateName == 'userList' && $__wcf->session->getPermission('mod.board.canViewPostVersions')}
+	WBB.ACP.User.EditHistory.init();
+{/if}]]></templatecode>
+		</templatelistener>
 	</import>
 </data>

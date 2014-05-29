@@ -32,6 +32,7 @@
 		<instruction type="option">options.xml</instruction>
 		<instruction type="eventListener">events.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+		<instruction type="clipboardAction">clipboardAction.xml</instruction>
 		
 		<!-- lng -->
 		<instruction type="language">lang/*.xml</instruction>
@@ -40,8 +41,11 @@
 	<instructions type="update" fromversion="1.0.2">
 		<instruction type="file" application="wbb">files.tar</instruction>
 		<instruction type="template" application="wbb">templates.tar</instruction>
+		<instruction type="eventListener">events.xml</instruction>
 		<instruction type="language">lang/*.xml</instruction>
 		<instruction type="sql">update.sql</instruction>
 		<instruction type="script">acp/update.php</instruction>
+		<instruction type="clipboardAction">clipboardAction.xml</instruction>
+		<instruction type="templateListener">templateListener.xml</instruction>
 	</instructions>
 </package>
