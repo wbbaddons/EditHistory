@@ -5,7 +5,7 @@
 		<packagedescription><![CDATA[This plugin versioned edits of posts.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Dieses Plugin versioniert Bearbeitungen von Beiträgen.]]></packagedescription>
 		<version>1.1.0</version>
-		<date>2014-04-22</date>
+		<date>2014-06-17</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -16,7 +16,7 @@
 	<requiredpackages>
 		<requiredpackage minversion="2.0.6">com.woltlab.wcf</requiredpackage>
 		<requiredpackage minversion="4.0.6">com.woltlab.wbb</requiredpackage>
-		<requiredoackage minversion="1.0.0">be.bastelstu.jan.wcf.diffutil</requiredoackage>
+		<requiredpackage minversion="1.0.0" file="requirements/be.bastelstu.jan.wcf.diffutil.tar">be.bastelstu.jan.wcf.diffutil</requiredpackage>
 	</requiredpackages>
 	
 	<instructions type="install">
