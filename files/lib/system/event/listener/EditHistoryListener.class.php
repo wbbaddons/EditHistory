@@ -22,6 +22,8 @@ class EditHistoryListener implements IEventListener {
 		
 		switch ($eventName) {
 			case 'initializeAction':
+				if (!count($eventObj->getObjectIDs())) return; 
+				
 				// check for aviable versions 
 				$conditions = new PreparedStatementConditionBuilder(); 
 				$conditions->add("post_history_version.postID IN (?)", array($eventObj->getObjectIDs()));
