@@ -5,7 +5,6 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\WCF;
 use wbb\data\post\Post;
 use wbb\data\thread\Thread;
-use wcf\data\user\User;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\util\DiffUtil;
@@ -298,7 +297,7 @@ class PostHistoryVersionAction extends AbstractDatabaseObjectAction {
 	public function compare() {
 		return array(
 			'uid' => $this->version1->versionID . 'y' . $this->version2->versionID,
-			'template' => DiffUtil::toHTML(DiffUtil::compare($this->version1->message, $this->version2->message))
+			'template' => nl2br(DiffUtil::toHTML(DiffUtil::compare($this->version1->message, $this->version2->message)))
 		);
 	}
 }
