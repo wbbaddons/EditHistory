@@ -1,7 +1,7 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{lang}wbb.post.edithistory.versions{/lang} {if $pageNo > 1}- {lang}wcf.page.pageNo{/lang} {/if} {if $post->getTitle() != $post->getThread()->topic}- {$post->getTitle()} {/if}- {$post->getThread()->topic} - {PAGE_TITLE|language}</title>
+	<title>{lang}wbb.post.edithistory.versions{/lang}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{if $post->getTitle() != $post->getThread()->topic} - {$post->getTitle()}{/if} - {$post->getThread()->topic} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude'}
 	
@@ -17,15 +17,16 @@
 		//<![CDATA[ 
 		$(function() {
 			new WCF.Message.BBCode.CodeViewer();
-			new WBB.EditHistory.Revert();
-			new WBB.EditHistory.IPAddressHandler();
-			new WBB.EditHistory.CompareHandler({$post->postID});
 			
 			WCF.Language.addObject({
 				'wbb.post.ipAddress.title': '{lang}wbb.post.ipAddress.title{/lang}', 
 				'wbb.post.edithistory.comparison': '{lang}wbb.post.edithistory.comparison{/lang}', 
 				'wbb.post.edithistory.compare': '{lang}wbb.post.edithistory.compare{/lang}'
 			});
+			
+			new WBB.EditHistory.Revert();
+			new WBB.EditHistory.IPAddressHandler();
+			new WBB.EditHistory.CompareHandler({$post->postID});
 		});
 		//]]>
 	</script>
