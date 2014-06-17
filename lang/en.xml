@@ -18,4 +18,9 @@
 		<item name="wcf.acp.option.wbb_postedithistory_deleteversionsafter"><![CDATA[Delete versions automatically]]></item>
 		<item name="wcf.acp.option.wbb_postedithistory_deleteversionsafter.description"><![CDATA[Period after versions of posts are automatically deleted. [Time in days, 0 to disable the deletion entirely]]]></item>
 	</category>
+	
+	<category name="wcf.clipboard">
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertLastEdits"><![CDATA[Undo Edits ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertLastEdits.confirmMessage"><![CDATA[Do you really want the edits in the last 7 days from {if $count == 1}a{else}{#$count}{/if} user{if $count > 1}s{/if} reset?]]></item>
+	</category>
 </language>
