@@ -297,7 +297,7 @@ class PostHistoryVersionAction extends AbstractDatabaseObjectAction {
 	public function compare() {
 		return array(
 			'uid' => $this->version1->versionID . 'y' . $this->version2->versionID,
-			'template' => nl2br(DiffUtil::toHTML(DiffUtil::compare($this->version1->message, $this->version2->message)))
+			'template' => nl2br(DiffUtil::toHTML(DiffUtil::compare($this->version2->message, $this->version1->message)))
 		);
 	}
 }
