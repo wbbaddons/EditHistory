@@ -44,7 +44,7 @@
 		<instruction type="eventListener">events.xml</instruction>
 		<instruction type="language">lang/*.xml</instruction>
 		<instruction type="sql">update.sql</instruction>
-		<instruction type="script">acp/update.php</instruction>
+		<instruction type="script">acp/update_edithistory.php</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
 		<instruction type="templateListener">templateListener.xml</instruction>
 	</instructions>
