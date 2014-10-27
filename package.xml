@@ -43,7 +43,7 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="1.1.0">
-		<!-- nothing :) -->
+		<instruction type="file" application="wbb">files.tar</instruction> <!-- pseudo update -->
 	</instructions>
 	
 	<instructions type="update" fromversion="1.0.2">
